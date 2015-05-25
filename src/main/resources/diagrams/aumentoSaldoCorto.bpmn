@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="aumentoDeSaldoCorto" name="Aumento de saldo corto" isExecutable="true">
+    <startEvent id="startevent12" name="Start"></startEvent>
+    <endEvent id="endevent12" name="End"></endEvent>
+    <subProcess id="subprocess1" name="Sub Process">
+      <startEvent id="startevent13" name="Start"></startEvent>
+      <scriptTask id="scripttask1" name="Script Task" scriptFormat="groovy" activiti:autoStoreVariables="false">
+        <script>out:println"lolo2";</script>
+      </scriptTask>
+      <sequenceFlow id="flow4" sourceRef="startevent13" targetRef="scripttask1"></sequenceFlow>
+      <endEvent id="endevent13" name="End"></endEvent>
+      <sequenceFlow id="flow5" sourceRef="scripttask1" targetRef="usertask1"></sequenceFlow>
+      <userTask id="usertask1" name="User Task">
+        <extensionElements>
+          <activiti:formProperty id="ede" name="asd" type="string"></activiti:formProperty>
+        </extensionElements>
+      </userTask>
+      <sequenceFlow id="flow8" sourceRef="usertask1" targetRef="endevent13"></sequenceFlow>
+    </subProcess>
+    <sequenceFlow id="flow3" sourceRef="subprocess1" targetRef="endevent12"></sequenceFlow>
+    <scriptTask id="scripttask2" name="Script Task" scriptFormat="groovy" activiti:autoStoreVariables="false">
+      <script>out:println"lolo1";</script>
+    </scriptTask>
+    <sequenceFlow id="flow6" sourceRef="startevent12" targetRef="scripttask2"></sequenceFlow>
+    <sequenceFlow id="flow7" sourceRef="scripttask2" targetRef="subprocess1"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_aumentoDeSaldoCorto">
+    <bpmndi:BPMNPlane bpmnElement="aumentoDeSaldoCorto" id="BPMNPlane_aumentoDeSaldoCorto">
+      <bpmndi:BPMNShape bpmnElement="startevent12" id="BPMNShape_startevent12">
+        <omgdc:Bounds height="35.0" width="35.0" x="10.0" y="223.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent12" id="BPMNShape_endevent12">
+        <omgdc:Bounds height="35.0" width="35.0" x="790.0" y="239.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="subprocess1" id="BPMNShape_subprocess1">
+        <omgdc:Bounds height="220.0" width="461.0" x="270.0" y="141.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="startevent13" id="BPMNShape_startevent13">
+        <omgdc:Bounds height="35.0" width="35.0" x="320.0" y="231.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="scripttask1" id="BPMNShape_scripttask1">
+        <omgdc:Bounds height="55.0" width="105.0" x="420.0" y="226.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent13" id="BPMNShape_endevent13">
+        <omgdc:Bounds height="35.0" width="35.0" x="660.0" y="236.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask1" id="BPMNShape_usertask1">
+        <omgdc:Bounds height="55.0" width="105.0" x="540.0" y="290.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="scripttask2" id="BPMNShape_scripttask2">
+        <omgdc:Bounds height="55.0" width="105.0" x="110.0" y="213.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+        <omgdi:waypoint x="355.0" y="248.0"></omgdi:waypoint>
+        <omgdi:waypoint x="420.0" y="253.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+        <omgdi:waypoint x="525.0" y="253.0"></omgdi:waypoint>
+        <omgdi:waypoint x="592.0" y="290.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8">
+        <omgdi:waypoint x="592.0" y="290.0"></omgdi:waypoint>
+        <omgdi:waypoint x="677.0" y="271.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="731.0" y="251.0"></omgdi:waypoint>
+        <omgdi:waypoint x="790.0" y="256.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+        <omgdi:waypoint x="45.0" y="240.0"></omgdi:waypoint>
+        <omgdi:waypoint x="110.0" y="240.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
+        <omgdi:waypoint x="215.0" y="240.0"></omgdi:waypoint>
+        <omgdi:waypoint x="270.0" y="251.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

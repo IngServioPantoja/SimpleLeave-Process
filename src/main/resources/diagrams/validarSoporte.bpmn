@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef">
+  <process id="validarSoporte" name="Validar soporte" isExecutable="true">
+    <startEvent id="sid-EE06525B-3531-4CD8-955D-A875B36D29A2">
+      <extensionElements>
+        <activiti:formProperty id="idOrden" name="id orden" type="long" required="true"></activiti:formProperty>
+        <activiti:formProperty id="idSoporte" name="id soporte" type="long" required="true"></activiti:formProperty>
+      </extensionElements>
+    </startEvent>
+    <scriptTask id="sid-13E08DB9-EB16-41D0-8756-2EF517DE3D3B" name="Descripcion proceso" scriptFormat="groovy" activiti:autoStoreVariables="false">
+      <script>out:println"Ejecución subproceso validar soporte";
+out:println"Orden numero: "+idOrden;
+out:println" Soporte numero: "+idSoporte;</script>
+    </scriptTask>
+    <sequenceFlow id="sid-31384667-D84A-4695-8276-61A1B1F1D0A5" sourceRef="sid-EE06525B-3531-4CD8-955D-A875B36D29A2" targetRef="sid-13E08DB9-EB16-41D0-8756-2EF517DE3D3B"></sequenceFlow>
+    <endEvent id="sid-D9DE1BE7-1D07-424A-9B58-D603E8801112"></endEvent>
+    <userTask id="hTConciliarSoporte" name="Conciliar soporte" activiti:candidateGroups="AsistenteSupervisorGM">
+      <extensionElements>
+        <activiti:formProperty id="conciliarEstracto" name="validado" type="enum">
+          <activiti:value id="VA" name="Conciliar"></activiti:value>
+          <activiti:value id="VE" name="No conciliar"></activiti:value>
+        </activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="sid-DB9C2BF1-937A-4A37-A8BB-22EFC45FE0D5" sourceRef="sid-13E08DB9-EB16-41D0-8756-2EF517DE3D3B" targetRef="hTConciliarSoporte"></sequenceFlow>
+    <exclusiveGateway id="sid-B59CFF7E-A7DD-4D83-9104-FAA93DFFE85B" name="¿Se ha conciliado el estracto?"></exclusiveGateway>
+    <sequenceFlow id="sid-8067F658-8115-4340-BE80-66F825B7CF64" sourceRef="hTConciliarSoporte" targetRef="sid-B59CFF7E-A7DD-4D83-9104-FAA93DFFE85B"></sequenceFlow>
+    <scriptTask id="sid-2FB0B7B5-B302-494F-80DF-99C628F6F9C4" name="Adicionar a estractos no coincidentes" scriptFormat="groovy" activiti:autoStoreVariables="false">
+      <script>out:println"Se ha agregado a sin conciliar estractos el soporte";</script>
+    </scriptTask>
+    <sequenceFlow id="sid-19F8D6F5-394B-4C91-AA3B-A724C0420765" sourceRef="sid-2FB0B7B5-B302-494F-80DF-99C628F6F9C4" targetRef="sid-D9DE1BE7-1D07-424A-9B58-D603E8801112"></sequenceFlow>
+    <sequenceFlow id="flowNoconcilia" name="No concilia" sourceRef="sid-B59CFF7E-A7DD-4D83-9104-FAA93DFFE85B" targetRef="sid-2FB0B7B5-B302-494F-80DF-99C628F6F9C4">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${conciliarEstracto eq 'VE'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flowConcilia" name="Concilia" sourceRef="sid-B59CFF7E-A7DD-4D83-9104-FAA93DFFE85B" targetRef="sid-D9DE1BE7-1D07-424A-9B58-D603E8801112">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${conciliarEstracto eq 'VA'}]]></conditionExpression>
+    </sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_validarSoporte">
+    <bpmndi:BPMNPlane bpmnElement="validarSoporte" id="BPMNPlane_validarSoporte">
+      <bpmndi:BPMNShape bpmnElement="sid-EE06525B-3531-4CD8-955D-A875B36D29A2" id="BPMNShape_sid-EE06525B-3531-4CD8-955D-A875B36D29A2">
+        <omgdc:Bounds height="35.0" width="35.0" x="20.0" y="262.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-13E08DB9-EB16-41D0-8756-2EF517DE3D3B" id="BPMNShape_sid-13E08DB9-EB16-41D0-8756-2EF517DE3D3B">
+        <omgdc:Bounds height="80.0" width="100.0" x="90.0" y="240.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-D9DE1BE7-1D07-424A-9B58-D603E8801112" id="BPMNShape_sid-D9DE1BE7-1D07-424A-9B58-D603E8801112">
+        <omgdc:Bounds height="35.0" width="35.0" x="920.0" y="262.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="hTConciliarSoporte" id="BPMNShape_hTConciliarSoporte">
+        <omgdc:Bounds height="80.0" width="100.0" x="225.0" y="240.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-B59CFF7E-A7DD-4D83-9104-FAA93DFFE85B" id="BPMNShape_sid-B59CFF7E-A7DD-4D83-9104-FAA93DFFE85B">
+        <omgdc:Bounds height="40.0" width="40.0" x="360.0" y="260.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-2FB0B7B5-B302-494F-80DF-99C628F6F9C4" id="BPMNShape_sid-2FB0B7B5-B302-494F-80DF-99C628F6F9C4">
+        <omgdc:Bounds height="80.0" width="145.0" x="590.0" y="40.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sid-31384667-D84A-4695-8276-61A1B1F1D0A5" id="BPMNEdge_sid-31384667-D84A-4695-8276-61A1B1F1D0A5">
+        <omgdi:waypoint x="55.0" y="279.0"></omgdi:waypoint>
+        <omgdi:waypoint x="90.0" y="280.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-DB9C2BF1-937A-4A37-A8BB-22EFC45FE0D5" id="BPMNEdge_sid-DB9C2BF1-937A-4A37-A8BB-22EFC45FE0D5">
+        <omgdi:waypoint x="190.0" y="280.0"></omgdi:waypoint>
+        <omgdi:waypoint x="225.0" y="280.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-8067F658-8115-4340-BE80-66F825B7CF64" id="BPMNEdge_sid-8067F658-8115-4340-BE80-66F825B7CF64">
+        <omgdi:waypoint x="325.0" y="280.0"></omgdi:waypoint>
+        <omgdi:waypoint x="360.0" y="280.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-19F8D6F5-394B-4C91-AA3B-A724C0420765" id="BPMNEdge_sid-19F8D6F5-394B-4C91-AA3B-A724C0420765">
+        <omgdi:waypoint x="662.0" y="120.0"></omgdi:waypoint>
+        <omgdi:waypoint x="937.0" y="262.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowNoconcilia" id="BPMNEdge_flowNoconcilia">
+        <omgdi:waypoint x="380.0" y="260.0"></omgdi:waypoint>
+        <omgdi:waypoint x="662.0" y="120.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="16.0" width="100.0" x="390.0" y="260.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowConcilia" id="BPMNEdge_flowConcilia">
+        <omgdi:waypoint x="400.0" y="280.0"></omgdi:waypoint>
+        <omgdi:waypoint x="920.0" y="279.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="16.0" width="100.0" x="410.0" y="280.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

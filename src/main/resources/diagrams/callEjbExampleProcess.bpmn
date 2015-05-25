@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions
+  xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+  xmlns:activiti="http://activiti.org/bpmn"
+  targetNamespace="Examples"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+
+  <process id="callEjbExample" name="Call EJB example">
+  
+    <startEvent id="theStart" />
+    <sequenceFlow id="flow1" sourceRef="theStart" targetRef="callEjb" />
+    
+    <serviceTask id="callEjb" 
+                 activiti:expression="${toUpperCaseEjbBean.toUpperCase(var)}"
+                 activiti:resultVariableName="var" />
+    <sequenceFlow id="flow2" sourceRef="callEjb" targetRef="outputResult" />
+    
+    <scriptTask id="outputResult" scriptFormat="groovy">
+    	<script>
+    		out:println "uppercased version = " + var
+    	</script>
+    </scriptTask>
+    <sequenceFlow id="flow3" sourceRef="outputResult" targetRef="theEnd" />
+    
+    <endEvent id="theEnd" />
+    
+  </process>
+
+</definitions>

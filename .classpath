@@ -14,8 +14,8 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry excluding="**/*.java" including="**/*.java" kind="src" output="target/test-classes" path="src/test/resources"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Activiti Designer Extensions"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/Activiti Designer Extensions"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
@@ -26,5 +26,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/sga-jee"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
